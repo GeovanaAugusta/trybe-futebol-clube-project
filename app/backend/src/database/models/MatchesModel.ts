@@ -58,5 +58,5 @@ export default Matches;
 
 // SOURCE belongsTo
 // https://stackoverflow.com/questions/63691872/typescript-with-sequelize-useradmin-belongsto-called-with-something-thats-not
-//  // foreign keys are automatically added by associations methods (like Project.belongsTo)
+// foreign keys are automatically added by associations methods (like Project.belongsTo)
   // by branding them using the `ForeignKey` type, `Project.init` will know it does not need to
