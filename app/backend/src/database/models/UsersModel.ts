@@ -76,7 +76,7 @@ export default Users;
 //     primaryKey: true,
 //     autoIncrement: true,
 //   },
-// }, { sequelize });
+// }, { sequelize }); 
 
 // User.init(
 //   {
