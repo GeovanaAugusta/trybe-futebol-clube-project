@@ -12,12 +12,14 @@ export default class userController {
     console.log(email, password);
 
     const data = await this.userService.checkUser(email);
-    console.log('data', data.password);
+    console.log('data', data);
 
-    const hashPass = bcrypt.compareSync(password, data.password);
-    console.log(hashPass);
+    // const hashPass = bcrypt.compareSync(password, data.password);
+    // console.log(hashPass);
 
-    if (data && hashPass) return res.status(200).json({ token: token(email) });
+    if (data && bcrypt.compareSync(password, data.password)) {
+      return res.status(200).json({ token: token(email) });
+    }
     return res.status(401).json({ message: 'Incorrect email or password' });
   };
 }
