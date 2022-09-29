@@ -41,7 +41,7 @@ describe('/login', () => {
 
 
   describe('POST', () => {
-    it('Deve cadastrar um usuário com sucesso', async () => {
+    it('Deve ser possível logar um usuário com sucesso', async () => {
       await (chai.request(app).post('/login')).send(await (chai.request(app).post('/login')).send(userMock))
       expect(chaiHttpResponse.status).to.equal(200);
     })
@@ -50,6 +50,15 @@ describe('/login', () => {
       expect(chaiHttpResponse.body).to.have.property('token');
       expect(chaiHttpResponse.body).to.deep.equal({token: tokenMock})
     });
+    it('Deve retornar um erro, se o email estiver errado', async () => {  
+      await (chai.request(app).post('/login')).send(await (chai.request(app).post('/login')).send({
+        email: 'admin@admin.com',
+        password: 'secret_admin',
+      }))
+     expect(chaiHttpResponse.body).not.to.have.property('token');
+     expect(chaiHttpResponse.body).not.equal({token: tokenMock});
+     expect(chaiHttpResponse.status).to.equal(401);
+   });
   })
 });
 

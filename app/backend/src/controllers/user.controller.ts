@@ -3,24 +3,29 @@ import * as bcrypt from 'bcryptjs';
 import UserService from '../services/user.service';
 import userInterface from '../interfaces/user.interface';
 import token from '../middlewares/auth';
+import { ExtendRole } from '../interfaces/role.interface';
 
 export default class userController {
   constructor(private userService = new UserService()) {}
 
   public checkUser: RequestHandler = async (req: Request, res: Response) => {
     const { email, password } = req.body as userInterface;
-    console.log(email, password);
-
+    // console.log(email, password);
     const data = await this.userService.checkUser(email);
-    console.log('data', data);
-
-    // const hashPass = bcrypt.compareSync(password, data.password);
-    // console.log(hashPass);
+    // console.log('data controller', data);
 
     if (data && bcrypt.compareSync(password, data.password)) {
-      return res.status(200).json({ token: token(email) });
+      return res.status(200).json({ token: token.getToken(email) });
     }
     return res.status(401).json({ message: 'Incorrect email or password' });
+  };
+
+  public getRole: RequestHandler = async (req: Request, res: Response) => {
+    const { payload } = (req as ExtendRole).user;
+    // console.log('email', payload);
+    const role = await this.userService.getRole(payload);
+    // console.log(role);
+    if (role) { return res.status(200).json(role); }
   };
 }
 

@@ -1,7 +1,9 @@
 import * as jwt from 'jsonwebtoken';
-
+import { NextFunction, Request, Response } from 'express';
+import { ExtendRole, Role } from '../interfaces/role.interface';
 // Module '"/home/usuario/sd-020-a-trybe-futebol-clube/app/backend/node_modules/@types/jsonwebtoken/index"' has no default export.
 
+const JWT_SECRET = process.env.JWT_SECRET || 'jwt_secret';
 // console.log(process.env.JWT_SECRET);
 
 const jwtConfig: jwt.SignOptions = {
@@ -18,7 +20,23 @@ const getToken = (email: string): string => {
   return token;
 };
 
-export default getToken;
+const checkToken = async (req: Request, res: Response, next: NextFunction) => {
+  const token = req.headers.authorization;
+  // console.log(token);
+  if (!token) {
+    return res.status(401).json({ message: 'Token not found' });
+  }
+  try {
+    const payload = jwt.verify(token, JWT_SECRET) as unknown as Role;
+    // console.log(payload);
+    (req as ExtendRole).user = payload;
+    return next();
+  } catch (err) {
+    return res.status(401).json({ message: 'Expired or invalid token' });
+  }
+};
+
+export default { getToken, checkToken };
 
 // SOURCE
 // https://www.becomebetterprogrammer.com/jwt-authentication-middleware-nodejs-typescript/ usei de base essa solução:
