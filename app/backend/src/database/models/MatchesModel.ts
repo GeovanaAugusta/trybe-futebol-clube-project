@@ -44,16 +44,19 @@ Matches.init(
   {
     underscored: true,
     sequelize: db,
-    modelName: 'matchs',
+    modelName: 'Matches',
+    tableName: 'matches',
     timestamps: false,
   },
 );
 
-Matches.belongsTo(Teams, { foreignKey: 'homeTeam', as: 'teamByHome' });
-Matches.belongsTo(Teams, { foreignKey: 'awayTeam', as: 'teamByAway' });
+Matches.belongsTo(Teams, { foreignKey: 'homeTeam', as: 'teamHome' });
+Matches.belongsTo(Teams, { foreignKey: 'awayTeam', as: 'teamAway' });
 
-Teams.hasMany(Matches, { foreignKey: 'homeTeam', as: 'teamByHome' });
-Teams.hasMany(Matches, { foreignKey: 'awayTeam', as: 'teamByAway' });
+Teams.hasMany(Matches, { foreignKey: 'homeTeam', as: 'teamHome' });
+Teams.hasMany(Matches, { foreignKey: 'awayTeam', as: 'teamAway' });
+
+// Finalmente entendi o as aqui, para ficar com as chaves solicitadas no readme
 
 export default Matches;
 
