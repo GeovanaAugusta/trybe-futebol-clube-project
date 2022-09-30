@@ -10,10 +10,10 @@ export default class TeamService {
     return teams;
   }
 
-  // public async getById(id: number): Promise<TeamInterface> {
-  //   const team = await this.model.findByPk(id);
-  //   // console.log('team', team);
+  public async getById(id: number): Promise<TeamInterface> {
+    const team = await this.model.findByPk(id);
+    // console.log('team', team);
 
-  //   return team;
-  // }
+    return team as TeamInterface;
+  }
 }
