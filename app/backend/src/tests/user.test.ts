@@ -52,7 +52,7 @@ describe('/login', () => {
     });
     it('Deve retornar um erro, se o email estiver errado', async () => {  
       await (chai.request(app).post('/login')).send(await (chai.request(app).post('/login')).send({
-        email: 'admin@admin.com',
+        email: 'admin@admin.csom',
         password: 'secret_admin',
       }))
      expect(chaiHttpResponse.body).not.to.have.property('token');
