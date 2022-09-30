@@ -77,6 +77,12 @@ const teamMock =
 	}
 ]
 
+const mockById = 
+{
+	"id": 5,
+	"teamName": "Cruzeiro"
+}
+
 
 chai.use(chaiHttp);
 
@@ -96,10 +102,15 @@ describe('/login', () => {
 
   describe('GET', () => {
     it('Deve ser possível visualizar todos os times com sucesso', async () => {
-      await (chai.request(app).post('/login')).send(await (chai.request(app).get('/teams')).send(teamMock))
+      await (chai.request(app).get('/teams'))
       expect(chaiHttpResponse.status).to.equal(200);
       expect(chaiHttpResponse).to.deep.equal(teamMock);
     });
+  })
+    it('Deve ser possível visualizar um time por id com sucesso', async () => {
+      await (chai.request(app).get('/teams/5'))
+      expect(chaiHttpResponse.status).to.equal(200);
+      expect(chaiHttpResponse).to.deep.equal(mockById);
   })
 });
 

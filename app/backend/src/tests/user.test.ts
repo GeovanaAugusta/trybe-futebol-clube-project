@@ -42,8 +42,9 @@ describe('/login', () => {
 
   describe('POST', () => {
     it('Deve ser possível logar um usuário com sucesso', async () => {
-      await (chai.request(app).post('/login')).send(await (chai.request(app).post('/login')).send(userMock))
+      await (chai.request(app).post('/login')).send(userMock)
       expect(chaiHttpResponse.status).to.equal(200);
+      expect(chaiHttpResponse.body).to.have.property('message');
     })
     it('Deve retornar um token, se os dados de login estiverem certos', async () => {  
        await (chai.request(app).post('/login')).send(userMock);
@@ -51,17 +52,40 @@ describe('/login', () => {
       expect(chaiHttpResponse.body).to.deep.equal({token: tokenMock})
     });
     it('Deve retornar um erro, se o email estiver errado', async () => {  
-      await (chai.request(app).post('/login')).send(await (chai.request(app).post('/login')).send({
+      await (chai.request(app).post('/login')).send({
         email: 'admin@admin.csom',
         password: 'secret_admin',
-      }))
+      })
      expect(chaiHttpResponse.body).not.to.have.property('token');
      expect(chaiHttpResponse.body).not.equal({token: tokenMock});
      expect(chaiHttpResponse.status).to.equal(401);
    });
   })
-});
+  
 
+  describe('GET', () => {
+
+     beforeEach(async () => {
+      sinon.restore();
+      })
+ 
+    it('Deve retornar o nível de acesso de forma bem sucedida /login/validate', async () => {
+      await (chai.request(app).post('/login/validate')).send();
+      expect(chaiHttpResponse.status).to.equal(200);
+    });
+    it('Deve retornar o nível de acesso do user', async () => {  
+      expect(chaiHttpResponse.body).to.be.equal({ role: 'admin'});
+    });
+   
+      it('Se a autorização é validada, deve retornar o nível de acesso', async () => {
+         await chai.request(app).get('/login/validate').set(
+          'authorization', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjoiYWRtaW5AYWRtaW4uY29tIiwiaWF0IjoxNjY0NDgzNDU3LCJleHAiOjE2NjUyNjEwNTd9.LYIRn2K-PSS7EnIKy3TYRRFCPxqn4Qil2DurIaVYLKI'
+        ) 
+        expect(chaiHttpResponse.body).to.have.property('role');
+        expect(chaiHttpResponse.body.role).to.be.equal('admin');
+      })
+})
+})
 // SOURCE
 // https://app.betrybe.com/learn/course/5e938f69-6e32-43b3-9685-c936530fd326/live-lectures/140133e3-d28a-4e8c-8ed3-4ba478fabf71/recording/d3d04db1-590b-47cc-be14-a719ed5baa32
 // https://www.chaijs.com/plugins/chai-http/
