@@ -6,9 +6,9 @@ export default class UserService {
   public model = UsersModel;
 
   public async checkUser(email: string): Promise<UserInterface> {
-    console.log(this.model);
+    // console.log(this.model);
     const data = await this.model.findOne({ where: { email } });
-    console.log('data', data);
+    // console.log('data', data);
     return data as UserInterface;
   }
 

@@ -24,21 +24,27 @@ export default class MatchesService {
     return matches;
   }
 
-  public async newMatch(match: MatchesInterface): Promise<MatchesInterface> {
+  public async newMatch(match: MatchesInterface) {
+    const homeTeam = await this.model.findByPk(match!.homeTeam);
+    const awayTeam = await this.model.findByPk(match!.awayTeam);
+
+    // console.log({ homeTeam, awayTeam });
+
+    if (!homeTeam || !awayTeam) { return false; }
     const createNewMatch = await this.model.create(match);
-    console.log({ createNewMatch });
+    // console.log({ createNewMatch });
 
     return createNewMatch;
   }
 
   public async finish(id: number) {
     const match = await this.model.findByPk(id);
-    console.log(match);
+    // console.log(match);
 
     // Créditos ao grande André - maior especialista
     match!.inProgress = 0;
     await match?.save();
-    console.log(match);
+    // console.log(match);
     return match;
   }
 }

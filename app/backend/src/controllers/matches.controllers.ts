@@ -12,18 +12,23 @@ export default class TeamController {
 
   public newMatch = async (req: Request, res: Response) => {
     const allBody = req.body;
-    console.log(allBody.homeTeam);
+    // console.log(allBody.homeTeam);
 
     const objectRequired = {
       ...allBody };
     const getNewMatch = await this.matchesService.newMatch(objectRequired);
-    console.log(getNewMatch);
+    // console.log('getNewMatch', getNewMatch);
 
     const bool = allBody.homeTeam === allBody.awayTeam;
 
     if (bool) {
       return res.status(401)
         .json({ message: 'It is not possible to create a match with two equal teams' });
+    }
+
+    if (!getNewMatch) {
+      return res.status(404)
+        .json({ message: 'There is no team with such id!' });
     }
 
     if (getNewMatch) { return res.status(201).json(getNewMatch); }
