@@ -47,6 +47,16 @@ export default class MatchesService {
     // console.log(match);
     return match;
   }
+
+  public async updateMatch(id: number, homeTeamGoals: number, awayTeamGoals: number) {
+    const matchUpdated = await this.model.findByPk(id);
+    matchUpdated!.homeTeamGoals = homeTeamGoals;
+    matchUpdated!.awayTeamGoals = awayTeamGoals;
+    await matchUpdated?.save();
+    // console.log(matchUpdated);
+
+    return matchUpdated;
+  }
 }
 
 // SOURCE
