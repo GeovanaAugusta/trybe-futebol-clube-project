@@ -1,10 +1,12 @@
 import { Router } from 'express';
 import MatchesController from '../controllers/matches.controllers';
 
-const teamRouter = Router();
+const matchRouter = Router();
 
 const matchesController = new MatchesController();
 
-teamRouter.get('/', matchesController.getAll);
+matchRouter.get('/', matchesController.getAll);
+matchRouter.post('/', matchesController.newMatch);
+matchRouter.patch('/:id/finish', matchesController.finish);
 
-export default teamRouter;
+export default matchRouter;

@@ -3,7 +3,7 @@ import { Request, Response, NextFunction } from 'express';
 const validationLogin = {
   validateLogin(req: Request, res: Response, next: NextFunction) {
     const { email, password } = req.body;
-    console.log(email, password);
+    // console.log(email, password);
 
     // const emailRegex = /\S+@\S+\.\S+/;
 

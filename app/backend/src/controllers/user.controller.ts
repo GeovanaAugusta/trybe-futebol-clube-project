@@ -10,7 +10,7 @@ export default class userController {
 
   public checkUser: RequestHandler = async (req: Request, res: Response) => {
     const { email, password } = req.body as userInterface;
-    // console.log(email, password);
+    // console.log({ email, password });
     const data = await this.userService.checkUser(email);
     // console.log('data controller', data);
 

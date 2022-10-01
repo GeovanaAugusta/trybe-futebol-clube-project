@@ -9,4 +9,24 @@ export default class TeamController {
     if (matches) { return res.status(200).json(matches); }
     return res.status(500).end();
   };
+
+  public newMatch = async (req: Request, res: Response) => {
+    const allBody = req.body;
+    const objectRequired = {
+      ...allBody };
+    const getNewMatch = await this.matchesService.newMatch(objectRequired);
+    console.log(getNewMatch);
+
+    if (getNewMatch) { return res.status(201).json(getNewMatch); }
+    return res.status(500).end();
+  };
+
+  public finish = async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const match = await this.matchesService.finish(Number(id));
+    // console.log(match);
+
+    if (match) { return res.status(200).json({ message: 'Finished' }); }
+    return res.status(500).end();
+  };
 }
