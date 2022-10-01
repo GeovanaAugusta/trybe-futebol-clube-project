@@ -12,10 +12,19 @@ export default class TeamController {
 
   public newMatch = async (req: Request, res: Response) => {
     const allBody = req.body;
+    console.log(allBody.homeTeam);
+
     const objectRequired = {
       ...allBody };
     const getNewMatch = await this.matchesService.newMatch(objectRequired);
     console.log(getNewMatch);
+
+    const bool = allBody.homeTeam === allBody.awayTeam;
+
+    if (bool) {
+      return res.status(401)
+        .json({ message: 'It is not possible to create a match with two equal teams' });
+    }
 
     if (getNewMatch) { return res.status(201).json(getNewMatch); }
     return res.status(500).end();
