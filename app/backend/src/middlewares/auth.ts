@@ -32,7 +32,7 @@ const checkToken = async (req: Request, res: Response, next: NextFunction) => {
     (req as ExtendRole).user = payload;
     return next();
   } catch (err) {
-    return res.status(401).json({ message: 'Expired or invalid token' });
+    return res.status(401).json({ message: 'Token must be a valid token' });
   }
 };
 
