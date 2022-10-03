@@ -24,6 +24,26 @@ export default class MatchesService {
     return matches;
   }
 
+  public async getByQuery(query: boolean): Promise<MatchesInterface[]> {
+    const matches = await this.model.findAll(
+      { where: { inProgress: query },
+        include: [
+          {
+            model: TeamsModel,
+            as: 'teamHome',
+
+          },
+          {
+            model: TeamsModel,
+            as: 'teamAway',
+
+          },
+        ],
+      },
+    );
+    return matches;
+  }
+
   public async newMatch(match: MatchesInterface) {
     const homeTeam = await this.model.findByPk(match!.homeTeam);
     const awayTeam = await this.model.findByPk(match!.awayTeam);
@@ -79,3 +99,4 @@ export default class MatchesService {
 // https://sequelize.org/docs/v6/core-concepts/model-querying-basics/ BINGO
 // patch
 // https://stackoverflow.com/questions/8158244/how-to-update-a-record-using-sequelize-for-node
+// https://stackoverflow.com/questions/43298606/sequelize-js-findall-with-include-to-search-foreign-key-makes-page-never-load
