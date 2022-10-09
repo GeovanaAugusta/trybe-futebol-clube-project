@@ -53,8 +53,8 @@ Matches.init(
 Matches.belongsTo(Teams, { foreignKey: 'homeTeam', as: 'teamHome' });
 Matches.belongsTo(Teams, { foreignKey: 'awayTeam', as: 'teamAway' });
 
-Teams.hasMany(Matches, { foreignKey: 'homeTeam', as: 'teamHome' });
-Teams.hasMany(Matches, { foreignKey: 'awayTeam', as: 'teamAway' });
+Teams.hasMany(Matches, { foreignKey: 'homeTeam', as: 'teamHomeb' });
+Teams.hasMany(Matches, { foreignKey: 'awayTeam', as: 'teamAwayb' });
 
 // Finalmente entendi o as aqui, para ficar com as chaves solicitadas no readme
 
