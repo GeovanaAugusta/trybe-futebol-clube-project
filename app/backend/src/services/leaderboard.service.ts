@@ -12,7 +12,7 @@ export default class LeaderboardService {
       include: [
         {
           model: MatchesModel,
-          as: 'teamHome',
+          as: 'teamHomeb',
           where: { inProgress: false },
           attributes: ['homeTeamGoals', 'awayTeamGoals'],
         },
@@ -25,17 +25,17 @@ export default class LeaderboardService {
   private static buildLeaderboard(teamsHome: TeamsModel[]): leaderboardInterface[] {
     const finalExpect = teamsHome.map((team: any) => ({
       name: team.teamName,
-      totalPoints: LeaderboardService.calculatePoints(team.teamHome),
-      totalGames: team.teamHome.length,
-      totalVictories: team.teamHome.filter((t: any) => t.homeTeamGoals > t.awayTeamGoals).length,
-      totalDraws: team.teamHome.filter((t: any) => t.homeTeamGoals === t.awayTeamGoals).length,
-      totalLosses: team.teamHome.filter((t: any) => t.homeTeamGoals < t.awayTeamGoals).length,
-      goalsFavor: team.teamHome.reduce((acc: any, curr: any) => acc + curr.homeTeamGoals, 0),
-      goalsOwn: team.teamHome.reduce((acc: any, curr: any) => acc + curr.awayTeamGoals, 0),
-      goalsBalance: team.teamHome.reduce((acc: any, curr: any) => acc + curr.homeTeamGoals, 0)
-      - team.teamHome.reduce((acc: any, curr: any) => acc + curr.awayTeamGoals, 0),
-      efficiency: (((LeaderboardService.calculatePoints(team.teamHome))
-      / (team.teamHome.length * 3)) * 100).toFixed(2),
+      totalPoints: LeaderboardService.calculatePoints(team.teamHomeb),
+      totalGames: team.teamHomeb.length,
+      totalVictories: team.teamHomeb.filter((t: any) => t.homeTeamGoals > t.awayTeamGoals).length,
+      totalDraws: team.teamHomeb.filter((t: any) => t.homeTeamGoals === t.awayTeamGoals).length,
+      totalLosses: team.teamHomeb.filter((t: any) => t.homeTeamGoals < t.awayTeamGoals).length,
+      goalsFavor: team.teamHomeb.reduce((acc: any, curr: any) => acc + curr.homeTeamGoals, 0),
+      goalsOwn: team.teamHomeb.reduce((acc: any, curr: any) => acc + curr.awayTeamGoals, 0),
+      goalsBalance: team.teamHomeb.reduce((acc: any, curr: any) => acc + curr.homeTeamGoals, 0)
+      - team.teamHomeb.reduce((acc: any, curr: any) => acc + curr.awayTeamGoals, 0),
+      efficiency: (((LeaderboardService.calculatePoints(team.teamHomeb))
+      / (team.teamHomeb.length * 3)) * 100).toFixed(2),
     }));
     const orderBy = orderByPriorities(finalExpect);
     return orderBy as unknown as leaderboardInterface[];
