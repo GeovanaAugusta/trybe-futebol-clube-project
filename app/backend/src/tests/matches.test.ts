@@ -683,6 +683,20 @@ const matchesMock =
 		"teamAway": {
 			"teamName": "Bahia"
 		}
+	},
+	{
+		"id": 49,
+		"homeTeam": 10,
+		"homeTeamGoals": 1,
+		"awayTeam": 6,
+		"awayTeamGoals": 0,
+		"inProgress": false,
+		"teamHome": {
+			"teamName": "Minas Brasília"
+		},
+		"teamAway": {
+			"teamName": "Ferroviária"
+		}
 	}
 ]
 
@@ -691,7 +705,7 @@ chai.use(chaiHttp);
 
 const { expect } = chai;
 
-describe('/login', () => {
+describe('/matches', () => {
   let chaiHttpResponse: Response;
 
   beforeEach(async () => {
@@ -708,6 +722,8 @@ describe('/login', () => {
       await (chai.request(app).get('/matches'))
       expect(chaiHttpResponse).to.have.status(200);
       expect(chaiHttpResponse.body).to.deep.equal(matchesMock);
+			expect(chaiHttpResponse.body).to.have.all.keys(['id', 'homeTeam', 'homeTeamGoals', 'awayTeam', 'awayTeamGoals', 'inProgress', 'teamHome', 'teamAway']);
+    });
     });
 
     it('Deve ser um array', async () => {  
@@ -718,8 +734,53 @@ describe('/login', () => {
       expect(chaiHttpResponse.body).to.have.property('teamName');
       expect(chaiHttpResponse.body).to.have.property('inProgress');
     });
-  })
+
+		
+		describe('/matches/:id/finish', () => {
+		sinon
+				.stub(MatchesModel, "update")
+				.resolves();
+
+
+			describe('PATCH', () => {
+			it('Deve ser possível finalizar uma partida com sucesso', async () => {
+	
+			await (chai.request(app).patch('/matches/2/finish'))
+			expect(chaiHttpResponse.status).to.have.status(200);
+			expect(chaiHttpResponse.body).to.have.all.keys(['message']);
+			expect(chaiHttpResponse.body.message).to.be.equal('Finished');
+		});
+
+		it('Deve ser um objeto', async () => {  
+      expect(chaiHttpResponse.body).to.be.an('object');
+    });
+	});
 });
+
+
+describe('/matches/:id', () => {
+	beforeEach(async () => {
+		sinon.restore();
+		})
+
+
+	describe('PATCH', () => {
+	it('Deve ser possível atualizar uma partida', async () => {
+
+	await (chai.request(app).patch('/matches/2'))
+	expect(chaiHttpResponse.status).to.have.status(200);
+	expect(chaiHttpResponse.body).to.have.all.keys(['message']);
+	expect(chaiHttpResponse.body.message).to.be.equal('Updated');
+});
+
+it('Deve ser um objeto', async () => {  
+	expect(chaiHttpResponse.body).to.be.an('object');
+});
+});
+});
+})
+
+
 
 // SOURCE
 // https://app.betrybe.com/learn/course/5e938f69-6e32-43b3-9685-c936530fd326/live-lectures/140133e3-d28a-4e8c-8ed3-4ba478fabf71/recording/d3d04db1-590b-47cc-be14-a719ed5baa32
