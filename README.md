@@ -60,6 +60,6 @@ npm run dev
 
 # Documentação da API
 
-- Em progresso...
+- Em progresso.
 
 
