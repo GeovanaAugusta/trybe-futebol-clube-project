@@ -23,6 +23,7 @@ export default class userController {
   public getRole: RequestHandler = async (req: Request, res: Response) => {
     const { payload } = (req as ExtendRole).user;
     // console.log('email', payload);
+    // 
     const role = await this.userService.getRole(payload);
     // console.log(role);
     if (role) { return res.status(200).json(role); }
