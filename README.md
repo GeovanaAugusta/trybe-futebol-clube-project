@@ -1,4 +1,4 @@
-# Blogs API
+# Trybe Futebol Clube
 
 Neste projeto foi desenvolvido um site informativo sobre partidas e classificações de futebol. Foi feita a criação de uma API que foi consumida por um front-end já disponibilizado pela Trybe, através da criação de um docker-compose.
 
