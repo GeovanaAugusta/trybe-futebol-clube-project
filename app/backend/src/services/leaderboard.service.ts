@@ -2,7 +2,6 @@ import MatchesModel from '../database/models/MatchesModel';
 import TeamsModel from '../database/models/TeamsModel';
 import leaderboardInterface from '../interfaces/leaderboard.interface';
 import orderByPriorities from './helper/orderByPriorities';
-// import TeamsInterface from '../interfaces/teams.interface';
 
 export default class LeaderboardService {
   public model = TeamsModel;
@@ -18,7 +17,7 @@ export default class LeaderboardService {
         },
       ],
     });
-    // console.log(teamsHome);
+
     return LeaderboardService.buildLeaderboard(teamsHome);
   }
 
@@ -39,7 +38,6 @@ export default class LeaderboardService {
     }));
     const orderBy = orderByPriorities(finalExpect);
     return orderBy as unknown as leaderboardInterface[];
-    // return teamsHome;
   }
 
   private static calculatePoints(teamHome: any[]): number {
@@ -50,7 +48,3 @@ export default class LeaderboardService {
     }, 0);
   }
 }
-
-// SOURCE
-// https://stackoverflow.com/questions/71110049/sequelize-where-with-include-based-on-parents-column
-// https://sequelize.org/docs/v6/core-concepts/model-querying-basics/

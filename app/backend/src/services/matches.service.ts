@@ -48,23 +48,18 @@ export default class MatchesService {
     const homeTeam = await this.model.findByPk(match!.homeTeam);
     const awayTeam = await this.model.findByPk(match!.awayTeam);
 
-    // console.log({ homeTeam, awayTeam });
-
     if (!homeTeam || !awayTeam) { return false; }
     const createNewMatch = await this.model.create(match);
-    // console.log({ createNewMatch });
 
     return createNewMatch;
   }
 
   public async finish(id: number) {
     const match = await this.model.findByPk(id);
-    // console.log(match);
 
-    // Créditos ao grande André - maior especialista
     match!.inProgress = 0;
     await match?.save();
-    // console.log(match);
+
     return match;
   }
 
@@ -78,25 +73,3 @@ export default class MatchesService {
     return matchUpdated;
   }
 }
-
-// SOURCE
-// https://stackoverflow.com/questions/59387325/typescript-sequelize-how-to-join-two-tables-with-common
-// https://stackoverflow.com/questions/53117988/sequelize-select-and-include-another-table-alias
-// City.hasMany(models.building,{as: 'building', foreignKey: 'cityId'})
-// include: [
-//   {
-//     model: Building, as: "buildings" // <---- HERE
-//  }
-// ]
-// https://stackoverflow.com/questions/54317914/sequelize-typescript-include-on-many-to-many-only-includes-one-of-many-results
-// // ...
-// User.addScope('public', {
-//   include: [
-//       // ...
-//       { model: Tag, as: 'tags', through: { attributes: [] } },
-//   ]
-// } as IFindOptions<User>);
-// https://sequelize.org/docs/v6/core-concepts/model-querying-basics/ BINGO
-// patch
-// https://stackoverflow.com/questions/8158244/how-to-update-a-record-using-sequelize-for-node
-// https://stackoverflow.com/questions/43298606/sequelize-js-findall-with-include-to-search-foreign-key-makes-page-never-load

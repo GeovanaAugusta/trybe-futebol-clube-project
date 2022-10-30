@@ -3,7 +3,6 @@ import TeamsModel from '../database/models/TeamsModel';
 import leaderboardInterface from '../interfaces/leaderboard.interface';
 import allResults from './helper/getAllResults';
 import orderByPriorities from './helper/orderByPriorities';
-// import TeamsInterface from '../interfaces/teams.interface';
 
 export default class LeaderboardServiceAway {
   public model = TeamsModel;
@@ -25,7 +24,7 @@ export default class LeaderboardServiceAway {
         },
       ],
     });
-    // console.log(teamsHome);
+
     return LeaderboardServiceAway.buildLeaderboardAll(teamsAway);
   }
 
@@ -47,14 +46,11 @@ export default class LeaderboardServiceAway {
       + LeaderboardServiceAway.calculatePointsHome(team.teamHomeb))
       / ((team.teamAwayb.length + team.teamHomeb.length) * 3)) * 100).toFixed(2),
     }));
-    // const orderBy = orderByPriorities(finalExpect);
+
     return orderByPriorities(finalExpect) as unknown as leaderboardInterface[];
-    // return finalExpect as unknown as leaderboardInterface[];
   }
 
   private static calculatePointsAway(teamAway: any): number {
-    // console.log(teamAway);
-
     return teamAway.reduce((acc: any, curr: any) => {
       if (curr.homeTeamGoals < curr.awayTeamGoals) { return acc + 3; }
       if (curr.homeTeamGoals === curr.awayTeamGoals) { return acc + 1; }
@@ -74,7 +70,3 @@ export default class LeaderboardServiceAway {
     return team.filter((t: any) => t.homeTeamGoals === t.awayTeamGoals).length;
   }
 }
-
-// SOURCE
-// https://stackoverflow.com/questions/71110049/sequelize-where-with-include-based-on-parents-column
-// https://sequelize.org/docs/v6/core-concepts/model-querying-basics/

@@ -1,6 +1,5 @@
 import { Router } from 'express';
 import LeaderboardController from '../controllers/leaderboard.controllers';
-// import checkToken from '../middlewares/auth';
 
 const leaderboardRouter = Router();
 

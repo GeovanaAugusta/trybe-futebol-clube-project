@@ -6,13 +6,12 @@ export default class TeamService {
 
   public async getAll(): Promise<TeamInterface[]> {
     const teams = await this.model.findAll();
-    // console.log('teams', teams);
+
     return teams;
   }
 
   public async getById(id: number): Promise<TeamInterface> {
     const team = await this.model.findByPk(id);
-    // console.log('team', team);
 
     return team as TeamInterface;
   }

@@ -28,12 +28,10 @@ export default class TeamController {
 
   public newMatch = async (req: Request, res: Response) => {
     const allBody = req.body;
-    // console.log(allBody.homeTeam);
 
     const objectRequired = {
       ...allBody };
     const getNewMatch = await this.matchesService.newMatch(objectRequired);
-    // console.log('getNewMatch', getNewMatch);
 
     const bool = allBody.homeTeam === allBody.awayTeam;
 
