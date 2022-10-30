@@ -19,7 +19,7 @@ Neste projeto foi desenvolvido um site informativo sobre partidas e classificaç
 
 - Clone o repositório
 
- `git clone git@github.com:GeovanaAugusta/trybe-futebol-clube-project`.
+ `git clone git@github.com:GeovanaAugusta/trybe-futebol-clube-project.git`.
  
  - Entre na pasta do repositório que você acabou de clonar:
     
