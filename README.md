@@ -719,6 +719,7 @@ npm run dev
 ```
 
 #### Filtrar as classificações dos times visitantes
+```bash
   GET /leaderboard/home 
 ```
 
@@ -938,6 +939,7 @@ npm run dev
 ```
 
 #### Filtrar a classificação geral dos times
+```bash
   GET /leaderboard 
 ```
 
